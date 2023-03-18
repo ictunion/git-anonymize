@@ -3,10 +3,11 @@
 import git_filter_repo
 import tomli
 import argparse
+from argparse import RawTextHelpFormatter
 import sys
 import os
 import subprocess
-from argparse import RawTextHelpFormatter
+import re
 
 # Configure command line argument parser
 
@@ -25,6 +26,8 @@ def build_parser():
     parser.add_argument("repository", help="path to git repository to alter")
     parser.add_argument("-c", "--config", default="public-commiters.toml", help="path to configuration toml file")
     parser.add_argument("-o", "--output", default="anonymized", help="path to location where altered repository should be created")
+    parser.add_argument("-n", "--name", default="Annonymous", help="name to use instead in commits")
+    parser.add_argument("-e", "--email", default="anyone@world.org", help="email to use instead in commits")
     return parser
 
 def read_config(path):
@@ -57,17 +60,31 @@ def setup_target(target):
 
 
 def rewrite_history(args, allowed_emails, allowed_names):
+    default_name = str.encode(args.name)
+    default_email = str.encode(args.email)
+
     def name_callback(name):
         if name in allowed_names:
             return name
         else:
-            return str.encode("Anonymous")
+            return default_name
 
     def email_callback(email):
         if email in allowed_emails:
             return email
         else:
-            return str.encode("anyone@world.org")
+            return default_email
+
+    def message_callback(message):
+        message_str = message.decode()
+        out = ""
+        for line in message_str.split('\n'):
+            if not line.startswith('Co-authored-by'):
+                out = out + line + '\n'
+            else:
+                out = out + '[anonymized]\n'
+
+        return str.encode(out)
 
     # Args deduced from:
     filter_args = git_filter_repo.FilteringOptions.default_options()
@@ -80,9 +97,10 @@ def rewrite_history(args, allowed_emails, allowed_names):
     filter_args.target=str.encode(args.output)
 
     git_filter_repo.RepoFilter(
-       filter_args,
-       email_callback=email_callback,
-       name_callback=name_callback,
+        filter_args,
+        email_callback=email_callback,
+        name_callback=name_callback,
+        message_callback=message_callback,
     ).run()
 
 def main():
