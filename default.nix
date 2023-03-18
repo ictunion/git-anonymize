@@ -1,6 +1,7 @@
 { python3
 , stdenv
 , nix-gitignore
+, makeWrapper
 }:
 let
   pythonEnv =
@@ -13,11 +14,12 @@ in
     pname = "git-anonymize";
     version = "0.1.0";
     src = nix-gitignore.gitignoreSource [] ./.;
+    nativeBuildInputs = [ makeWrapper ];
     propagatedBuildInputs = [ pythonEnv ];
     dontBuild = true;
     installPhase = ''
       mkdir -p $out/bin
-      ln -s $src/git-anonymize.py $out/bin/git-anonymize
+      cp $src/git-anonymize.py $out/bin/git-anonymize
+      wrapProgram "$out/bin/git-anonymize" --suffix PYTHONPATH : "${pythonEnv}"
     '';
   }
-
