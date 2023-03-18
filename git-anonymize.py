@@ -24,7 +24,7 @@ def build_parser():
     )
 
     parser.add_argument("repository", help="path to git repository to alter")
-    parser.add_argument("-c", "--config", default="public-commiters.toml", help="path to configuration toml file")
+    parser.add_argument("-c", "--config", default="public-contributors.toml", help="path to configuration toml file")
     parser.add_argument("-o", "--output", default="anonymized", help="path to location where altered repository should be created")
     parser.add_argument("-n", "--name", default="Annonymous", help="name to use instead in commits")
     parser.add_argument("-e", "--email", default="anyone@world.org", help="email to use instead in commits")
