@@ -1,0 +1,31 @@
+name: "Golden Test"
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  build-all:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+
+      - name: Verify formatting
+        env:
+          VERSION: 2.7.0
+          OS: linux
+          ARCH: amd64
+        run: |
+          curl -O -L -C - https://github.com/editorconfig-checker/editorconfig-checker/releases/download/$VERSION/ec-$OS-$ARCH.tar.gz
+          tar xzf ec-$OS-$ARCH.tar.gz
+          ./bin/ec-$OS-$ARCH
+
+      - name: Install nix
+        uses: cachix/install-nix-action@v18
+
+      - name: Run tests
+        run: nix develop -c bash -c './test/golden.sh'
+
+      - name: Build using nix
+        run: nix build
