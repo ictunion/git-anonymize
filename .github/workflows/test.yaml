@@ -5,7 +5,7 @@ on:
   push:
 
 jobs:
-  build-all:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
