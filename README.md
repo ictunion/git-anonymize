@@ -23,6 +23,9 @@ name = "ME"
 email = "you-all-know@me.com"
 ```
 
+Committers listed in this file will be assigned as authors of their commits even
+in anonymized repository.
+
 ## Using The Project
 
 Easiest way to install this tool is via [nix](nixos.org/).
@@ -43,7 +46,7 @@ nix-build release.nix
 ```
 
 If you don't want to use nix at all use pip or your package manager of choice
-to install following python3 dependecies:
+to install following python3 dependencies:
 
 - [git-filter-repo](https://github.com/newren/git-filter-repo)
 - [tomli](https://github.com/hukkin/tomli)
@@ -82,7 +85,7 @@ options:
 ## Installing in CI
 
 This project is primary meant to be used in CI.
-Current recommended method is to use nix, for other options see [Using Project](#Using-Project).
+Current recommended method is to use nix, for other options see [Using Project](#using-the-project).
 
 This is example **GitHub Action** workflow configuration:
 
@@ -116,7 +119,7 @@ jobs:
         uses: cachix/install-nix-action@v18
 
       - name: Create anonymized repo
-        run: nix run github:turboMaCk/git-anonymize -- . -o /tmp/anonymized
+        run: nix run github:ictunion/git-anonymize -- . -o /tmp/anonymized
 
       - name: Publish anonymized repository
         working-directory: /tmp/anonymized

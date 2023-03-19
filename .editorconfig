@@ -9,6 +9,18 @@ end_of_line = lf
 insert_final_newline = true
 charset = utf-8
 
-[*.{yaml,yml}]
+[*.{yaml,yml,toml}]
+indent_style = space
+indent_size = 2
+
+[*.py]
+indent_style = space
+indent_size = 4
+
+[*.sh]
+indent_style = space
+indent_size = 4
+
+[*.nix]
 indent_style = space
 indent_size = 2
