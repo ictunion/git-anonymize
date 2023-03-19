@@ -23,7 +23,7 @@ name = "ME"
 email = "you-all-know@me.com"
 ```
 
-Comitters listed in this file will be asigned as authors of their commits even
+Committers listed in this file will be assigned as authors of their commits even
 in anonymized repository.
 
 ## Using The Project
@@ -46,7 +46,7 @@ nix-build release.nix
 ```
 
 If you don't want to use nix at all use pip or your package manager of choice
-to install following python3 dependecies:
+to install following python3 dependencies:
 
 - [git-filter-repo](https://github.com/newren/git-filter-repo)
 - [tomli](https://github.com/hukkin/tomli)
