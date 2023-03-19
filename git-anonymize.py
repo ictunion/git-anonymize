@@ -75,17 +75,17 @@ def rewrite_history(args, allowed_emails, allowed_names):
         else:
             return default_email
 
-    # TODO: IDeally we would also respect allowed_names & allowed_emails
+    # TODO: Ideally we would also respect allowed_names & allowed_emails
     # in this filtering. But regexps are kind of hard to get right so
     # we do the safer and simpler thing now and anonymize every Co-author.
-    # If this would be implemneted definitely in future definitely don't forget
+    # If this would be implemented definitely in future definitely don't forget
     # to add test in test/golden.sh!
     def message_callback(message):
         message_str = message.decode()
         out = ""
         for line in message_str.split('\n'):
-            # Github adds these lines when ever branch contains
-            # commits of authored by different committer during sqush merge.
+            # GitHub adds these lines when ever branch contains
+            # commits of authored by different committer during squash merge.
             # We do this to prevent leaking of identifiable information
             # from such commit messages
             if not line.startswith('Co-authored-by'):
