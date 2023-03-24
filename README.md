@@ -19,12 +19,15 @@ name = "Tester"
 email = "tester@ictunion.cz"
 
 [very_public_person]
-name = "ME"
-email = "you-all-know@me.com"
+name = [ "ME", "My Other Name" ]
+email = [ "you-all-know@me.com", "other-email@somewhere.here" ]
 ```
 
 Committers listed in this file will be assigned as authors of their commits even
 in anonymized repository.
+
+Both values can be either string or list of strings for cases where single person
+is using multiple git configurations.
 
 ## Using The Project
 

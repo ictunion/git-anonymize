@@ -23,11 +23,14 @@ git config commit.gpgsign false
 git config user.name "Tester"
 git config user.email "tester@ictunion.cz"
 
-# Create commits
+# create commits
 git commit --allow-empty -m "initial commit"
-echo "secret" > $SECRET_FILE
-git add .
-git commit -m "second commit"
+
+# keep committer but set alternative name and email
+git config user.email "very-public@me.com"
+
+# commit again
+git commit --allow-empty -m "second commit"
 
 # change committer
 git config user.name "Tester2"
@@ -74,5 +77,17 @@ fi
 git log --pretty='%ce' | grep 'tester@ictunion.cz'
 if [ "$?" -ne 0 ]; then
     echo "Failed to allow tester email"
+    exit 4
+fi
+
+git log --pretty='%ce' | grep 'tester@ictunion.cz'
+if [ "$?" -ne 0 ]; then
+    echo "Failed to allow tester email"
+    exit 4
+fi
+
+git log --pretty='%ce' | grep 'very-public@me.com'
+if [ "$?" -ne 0 ]; then
+    echo "Failed to allow tester'sa 2nd email"
     exit 4
 fi
