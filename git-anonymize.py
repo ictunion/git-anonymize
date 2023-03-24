@@ -30,6 +30,17 @@ def build_parser():
     parser.add_argument("-e", "--email", default="anyone@world.org", help="email to use instead in commits")
     return parser
 
+def add_to_set(the_set, value):
+    # Single value is just added
+    if isinstance(value, str):
+        the_set.add(str.encode(value))
+    # If this is not string, lets assume it's list
+    else:
+        for string in value:
+            # We simply recurse
+            # this means we also technically support nested strings
+            add_to_set(the_set, string)
+
 def read_config(path):
     conf = {};
 
@@ -44,8 +55,8 @@ def read_config(path):
 
     for key in conf:
         value = conf[key];
-        allowed_emails.add(str.encode(value["email"]))
-        allowed_names.add(str.encode(value["name"]))
+        add_to_set(allowed_emails, value['email'])
+        add_to_set(allowed_names, value['name'])
 
     return {
         "allowed_emails": allowed_emails,

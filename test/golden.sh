@@ -27,7 +27,6 @@ git config user.email "tester@ictunion.cz"
 git commit --allow-empty -m "initial commit"
 
 # keep committer but set alternative name and email
-git config user.name "PublicTester"
 git config user.email "very-public@me.com"
 
 # commit again
@@ -39,9 +38,6 @@ git config user.email "tester2@ictunion.cz"
 
 # create commits as 2nd commiter
 git commit --allow-empty -m "fixing the mess"
-
-git config user.name "Tester2"
-git config user.email "tester2@ictunion.cz"
 
 echo ""
 echo "Running assertions:"
@@ -81,5 +77,17 @@ fi
 git log --pretty='%ce' | grep 'tester@ictunion.cz'
 if [ "$?" -ne 0 ]; then
     echo "Failed to allow tester email"
+    exit 4
+fi
+
+git log --pretty='%ce' | grep 'tester@ictunion.cz'
+if [ "$?" -ne 0 ]; then
+    echo "Failed to allow tester email"
+    exit 4
+fi
+
+git log --pretty='%ce' | grep 'very-public@me.com'
+if [ "$?" -ne 0 ]; then
+    echo "Failed to allow tester'sa 2nd email"
     exit 4
 fi
