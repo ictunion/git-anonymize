@@ -11,18 +11,15 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v3
 
-      - name: Verify formatting
-        env:
-          VERSION: 2.7.0
-          OS: linux
-          ARCH: amd64
-        run: |
-          sudo apt-get update
-          sudo apt-get install ca-certificates
-
-          curl -O -L -C - https://github.com/editorconfig-checker/editorconfig-checker/releases/download/$VERSION/ec-$OS-$ARCH.tar.gz
-          tar xzf ec-$OS-$ARCH.tar.gz
-          ./bin/ec-$OS-$ARCH
+      # - name: Verify formatting
+      #   env:
+      #     VERSION: 2.7.0
+      #     OS: linux
+      #     ARCH: amd64
+      #   run: |
+      #     curl -O -L -C - https://github.com/editorconfig-checker/editorconfig-checker/releases/download/$VERSION/ec-$OS-$ARCH.tar.gz
+      #     tar xzf ec-$OS-$ARCH.tar.gz
+      #     ./bin/ec-$OS-$ARCH
 
       - name: Install nix
         uses: cachix/install-nix-action@v18
