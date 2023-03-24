@@ -23,11 +23,15 @@ git config commit.gpgsign false
 git config user.name "Tester"
 git config user.email "tester@ictunion.cz"
 
-# Create commits
+# create commits
 git commit --allow-empty -m "initial commit"
-echo "secret" > $SECRET_FILE
-git add .
-git commit -m "second commit"
+
+# keep committer but set alternative name and email
+git config user.name "PublicTester"
+git config user.email "very-public@me.com"
+
+# commit again
+git commit --allow-empty -m "second commit"
 
 # change committer
 git config user.name "Tester2"
@@ -35,6 +39,9 @@ git config user.email "tester2@ictunion.cz"
 
 # create commits as 2nd commiter
 git commit --allow-empty -m "fixing the mess"
+
+git config user.name "Tester2"
+git config user.email "tester2@ictunion.cz"
 
 echo ""
 echo "Running assertions:"
