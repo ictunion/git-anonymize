@@ -17,8 +17,8 @@ jobs:
           OS: linux
           ARCH: amd64
         run: |
-          apt-get update
-          apt-get install ca-certificates
+          sudo apt-get update
+          sudo apt-get install ca-certificates
 
           curl -O -L -C - https://github.com/editorconfig-checker/editorconfig-checker/releases/download/$VERSION/ec-$OS-$ARCH.tar.gz
           tar xzf ec-$OS-$ARCH.tar.gz
