@@ -61,8 +61,7 @@ See help for more info:
 
 ```
 $ git-anonymize -h
-usage: git-anonymize [-h] [-c CONFIG] [-o OUTPUT] [-n NAME] [-e EMAIL]
-                     repository
+usage: git-anonymize [-h] [-c CONFIG] [-o OUTPUT] [-n NAME] [-e EMAIL] [-r REFS [REFS ...]] repository
 
 Anonymize git history
 
@@ -78,11 +77,12 @@ options:
   -n NAME, --name NAME  name to use instead in commits
   -e EMAIL, --email EMAIL
                         email to use instead in commits
+  -r REFS [REFS ...], --refs REFS [REFS ...]
+                        git refs (branches, tags etc.) to include in anonymized version separated by space like `-r main HEAD`
 
             Developed by volunteers from `Odborová organizace pracujících v ICT`.
             The sectorial union of workers in IT & communications.
-            See: http://ictunion.cz
-
+            See: https://ictunion.cz
 ```
 
 ## Installing in CI
