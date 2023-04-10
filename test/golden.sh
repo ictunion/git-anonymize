@@ -32,6 +32,9 @@ git config user.email "very-public@me.com"
 # commit again
 git commit --allow-empty -m "second commit"
 
+# create tag (ref)
+git tag public-tag
+
 # change committer
 git config user.name "Tester2"
 git config user.email "tester2@ictunion.cz"
@@ -44,7 +47,7 @@ echo "Running assertions:"
 echo ""
 
 # Run command
-../git-anonymize.py . -c ../test/custom_config.toml -o ../${OUTPUT}
+../git-anonymize.py . -c ../test/custom_config.toml -o ../${OUTPUT} -r HEAD public-tag
 
 # Asserts
 
@@ -90,4 +93,10 @@ git log --pretty='%ce' | grep 'very-public@me.com'
 if [ "$?" -ne 0 ]; then
     echo "Failed to allow tester'sa 2nd email"
     exit 4
+fi
+
+git tag | grep 'public-tag'
+if [ "$?" -ne 0 ]; then
+    echo "Failed to publish ref"
+    exit 5
 fi
