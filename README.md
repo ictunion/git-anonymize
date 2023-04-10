@@ -61,8 +61,7 @@ See help for more info:
 
 ```
 $ git-anonymize -h
-usage: git-anonymize [-h] [-c CONFIG] [-o OUTPUT] [-n NAME] [-e EMAIL]
-                     repository
+usage: git-anonymize [-h] [-c CONFIG] [-o OUTPUT] [-n NAME] [-e EMAIL] [-r REFS [REFS ...]] repository
 
 Anonymize git history
 
@@ -78,11 +77,12 @@ options:
   -n NAME, --name NAME  name to use instead in commits
   -e EMAIL, --email EMAIL
                         email to use instead in commits
+  -r REFS [REFS ...], --refs REFS [REFS ...]
+                        git refs (branches, tags etc.) to include in anonymized version separated by space like `-r main HEAD`
 
             Developed by volunteers from `Odborová organizace pracujících v ICT`.
             The sectorial union of workers in IT & communications.
-            See: http://ictunion.cz
-
+            See: https://ictunion.cz
 ```
 
 ## Installing in CI
@@ -131,6 +131,26 @@ jobs:
           git remote add origin {your-public-remote-repository}
           git push --force origin ${{ github.ref_name }}
 ```
+
+### Running Tests
+
+Golden test (or automated [acceptance test](https://en.wikipedia.org/wiki/Acceptance_testing)) is written as a bash script.
+Strategy is to produce new git repository with various commits and then inspect what repository produced by the library looks like.
+
+You can run test by:
+
+```
+$ ./test/golden.sh
+```
+
+or within nix environment
+
+```
+$ nix develop -c './test/golden.sh'
+```
+
+Test run will create new repository in directory `anonymized` which you can manually inspect.
+Subsequent test run will cleanup the directory.
 
 ## License
 
