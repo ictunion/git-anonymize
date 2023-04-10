@@ -149,6 +149,9 @@ or within nix environment
 $ nix develop -c './test/golden.sh'
 ```
 
+Test run will create new repository in directory `anonymized` which you can manually inspect.
+Subsequent test run will cleanup the directory.
+
 ## License
 
 This project is released under [MIT License](LICENSE).

@@ -19,7 +19,7 @@ def build_parser():
         epilog='''
             Developed by volunteers from `Odborová organizace pracujících v ICT`.
             The sectorial union of workers in IT & communications.
-            See: http://ictunion.cz
+            See: https://ictunion.cz
         '''
     )
 
