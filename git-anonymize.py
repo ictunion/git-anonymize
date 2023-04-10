@@ -28,6 +28,7 @@ def build_parser():
     parser.add_argument("-o", "--output", default="anonymized", help="path to location where altered repository should be created")
     parser.add_argument("-n", "--name", default="Annonymous", help="name to use instead in commits")
     parser.add_argument("-e", "--email", default="anyone@world.org", help="email to use instead in commits")
+    parser.add_argument("-r", "--refs", default=["HEAD"], help="git refs (branches, tags etc.) to include in anonymized version")
     return parser
 
 def add_to_set(the_set, value):
