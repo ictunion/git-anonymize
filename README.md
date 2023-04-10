@@ -132,6 +132,23 @@ jobs:
           git push --force origin ${{ github.ref_name }}
 ```
 
+### Running Tests
+
+Golden test (or automated [acceptance test](https://en.wikipedia.org/wiki/Acceptance_testing)) is written as a bash script.
+Strategy is to produce new git repository with various commits and then inspect what repository produced by the library looks like.
+
+You can run test by:
+
+```
+$ ./test/golden.sh
+```
+
+or within nix environment
+
+```
+$ nix develop -c './test/golden.sh'
+```
+
 ## License
 
 This project is released under [MIT License](LICENSE).
