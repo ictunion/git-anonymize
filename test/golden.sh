@@ -24,7 +24,7 @@ git config user.name "Tester"
 git config user.email "tester@ictunion.cz"
 
 # create commits
-git commit --allow-empty -m "initial commit"
+git commit --allow-empty --signoff -m "initial commit"
 
 # keep committer but set alternative name and email
 git config user.email "very-public@me.com"
@@ -40,7 +40,7 @@ git config user.name "Tester2"
 git config user.email "tester2@ictunion.cz"
 
 # create commits as 2nd commiter
-git commit --allow-empty -m "fixing the mess"
+git commit --allow-empty -m "fixing the mess ping @user!"
 
 echo ""
 echo "Running assertions:"
