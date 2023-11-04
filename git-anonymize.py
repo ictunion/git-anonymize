@@ -25,10 +25,18 @@ def build_parser():
 
     parser.add_argument("repository", help="path to git repository to alter")
     parser.add_argument("-c", "--config", default="public-contributors.toml", help="path to configuration toml file")
-    parser.add_argument("-o", "--output", default="anonymized", help="path to location where altered repository should be created")
+    parser.add_argument(
+        "-o", "--output", default="anonymized", help="path to location where altered repository should be created"
+    )
     parser.add_argument("-n", "--name", default="Annonymous", help="name to use instead in commits")
     parser.add_argument("-e", "--email", default="anyone@world.org", help="email to use instead in commits")
-    parser.add_argument("-r", "--refs", default=["HEAD"], nargs='+', help="git refs (branches, tags etc.) to include in anonymized version separated by space like `-r main HEAD`")
+    parser.add_argument(
+        "-r",
+        "--refs",
+        default=["HEAD"],
+        nargs='+',
+        help="git refs (branches, tags etc.) to include in anonymized version separated by space like `-r main HEAD`"
+    )
     return parser
 
 def add_to_set(the_set, value):
@@ -96,14 +104,14 @@ def rewrite_history(args, allowed_emails, allowed_names):
         message_str = message.decode()
         out = ""
         for line in message_str.split('\n'):
-            # GitHub adds these lines when ever branch contains
-            # commits of authored by different committer during squash merge.
+            # GitHub or Git sometimes adds Co-authored-by or Signed-off-by
+            # followed by email and name of the author of the commit
             # We do this to prevent leaking of identifiable information
             # from such commit messages
-            if not line.startswith('Co-authored-by'):
-                out = out + line + '\n'
-            else:
+            if line.startswith(('Co-authored-by', 'Signed-off-by')):
                 out = out + '[anonymized]\n'
+            else:
+                out = out + line + '\n'
 
         return str.encode(out)
 
@@ -112,10 +120,10 @@ def rewrite_history(args, allowed_emails, allowed_names):
     filter_args.force = True
     filter_args.partial = True
     filter_args.refs = args.refs
-    filter_args.repack=False
-    filter_args.replace_refs='update-no-add'
-    filter_args.source=str.encode(args.repository)
-    filter_args.target=str.encode(args.output)
+    filter_args.repack = False
+    filter_args.replace_refs = 'update-no-add'
+    filter_args.source = str.encode(args.repository)
+    filter_args.target = str.encode(args.output)
 
     git_filter_repo.RepoFilter(
         filter_args,
