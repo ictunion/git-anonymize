@@ -3,6 +3,7 @@
 import git_filter_repo
 import tomli
 import argparse
+import re
 from argparse import RawTextHelpFormatter
 import sys
 import os
@@ -101,7 +102,8 @@ def rewrite_history(args, allowed_emails, allowed_names):
     # If this would be implemented definitely in future definitely don't forget
     # to add test in test/golden.sh!
     def message_callback(message):
-        message_str = message.decode()
+        # Strip github user mentions
+        message_str = re.sub(r'\B@((?!.*(-){2,}.*)[a-z0-9][a-z0-9-]{0,38}[a-z0-9])', '[anonymized]', message.decode())
         out = ""
         for line in message_str.split('\n'):
             # GitHub or Git sometimes adds Co-authored-by or Signed-off-by
