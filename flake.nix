@@ -10,6 +10,6 @@
       pkgs = import nixpkgs { inherit system; };
     in
     {
-      defaultPackage = pkgs.callPackage ./. {};
+      packages.default = pkgs.callPackage ./. {};
   });
 }
